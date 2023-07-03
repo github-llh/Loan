@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="loan">
+    <output-path>$PROJECT_DIR$/out/artifacts/loan</output-path>
+    <root id="archive" name="loan.jar" />
+  </artifact>
+</component>

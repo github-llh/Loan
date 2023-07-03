@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--根标签-->
+<configuration>
+      <!--加载db.properties资源文件-->
+      <properties resource="db.properties"/>
+
+      <!--全局的配置-->
+      <settings>
+            <!--日志-->
+            <setting name="logImpl" value="STDOUT_LOGGING"/>
+            <!--驼峰式命名-->
+            <setting name="mapUnderscoreToCamelCase" value="true"/>
+      </settings>
+
+      <!--分页插件的配置-->
+      <plugins>
+            <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+      </plugins>
+
+      <!--环境  default一定要和子环境的id一致-->
+      <environments default="dev">
+            <!--子环境-->
+            <environment id="dev">
+                  <!--事务管理器-->
+                  <transactionManager type="JDBC"/>
+                  <!--数据源 type="POOLED":表示使用连接池的方式链接数据库-->
+                  <dataSource type="POOLED">
+                        <!--
+                        property中的name属性必须写死不能修改
+                        value="${db.properties文件中key}"
+                        -->
+                        <property name="driver" value="${jdbc.driver}"/>
+                        <property name="url" value="${jdbc.url}"/>
+                        <property name="username" value="${jdbc.username}"/>
+                        <property name="password" value="${jdbc.password}"/>
+                  </dataSource>
+            </environment>
+      </environments>
+      <!--sql映射文件  以后sql和代码分开，sql单独写在一个xml文件中-->
+      <mappers>
+            <!--不要忘记改成自己的sql映射文件名称-->
+            <mapper resource="mapper/LoanMapper.xml"/>
+      </mappers>
+</configuration>

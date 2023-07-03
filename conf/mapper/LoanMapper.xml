@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.llh.mapper.LoanMapper">
+      <insert id="addLog">
+            insert into c_oper set lid=#{lid},uid=#{uid},oper_code=#{fid},oper_time=now()
+      </insert>
+
+      <insert id="addLoan">
+            insert into c_loan set uname=#{uname},id_card=#{idCard},tel=#{tel},apply_date=#{applyDate},principal=#{principal},uid=#{uid}
+      </insert>
+
+      <insert id="addBatch">
+            insert into c_loan set uname=#{uname},id_card=#{idCard},tel=#{tel},apply_date=#{applyDate},principal=#{principal},uid=#{uid}
+      </insert>
+
+      <update id="updateLoan_1">
+            update c_loan set flag=#{flag} where lid=#{lid}
+      </update>
+
+      <update id="updateLoan_3">
+            update c_loan
+            set uname=#{uname},
+                id_card=#{idCard},
+                tel=#{tel},
+                apply_date=#{applyDate},
+                principal=#{principal},
+                interest=#{interest},
+                time_limit=#{timeLimit},
+                flag=#{flag}
+            where lid = #{lid}
+      </update>
+
+      <select id="getLoans" resultType="com.llh.domain.Loan">
+            SELECT c.lid,
+            c.uname,
+            c.id_card,
+            c.tel,
+            c.apply_date,
+            c.principal,
+            c.interest,
+            c.time_limit,
+            (c.principal + (c.principal * c.interest)) end_principal,
+            (DATE_ADD(c.apply_date, interval c.time_limit day)) end_date,
+            c.flag,
+            c.`status`,
+            c.uid,
+            u.login_name
+            from c_loan c
+            LEFT JOIN c_user u on c.uid = u.uid
+            where c.status = 0
+            <if test="uname!=null and uname!=''">
+                  and instr(c.uname,#{uname})
+            </if>
+            <if test="idCard!=null and idCard!=''">
+                  and instr(c.id_card,#{idCard})
+            </if>
+            <if test="tel!=null and tel!=''">
+                  and instr(c.tel,#{tel})
+            </if>
+            <if test="uid!=null and uid!=''">
+                  and c.uid=#{uid}
+            </if>
+            <if test="minDate!=null and minDate!=''">
+                  and c.apply_date>=#{minDate}
+            </if>
+            <if test="maxDate!=null and maxDate!=''">
+                  and c.apply_date&lt;=#{minDate}
+            </if>
+            <if test="flag!=null and flag!=''">
+                  and c.flag=#{flag}
+            </if>
+      </select>
+
+      <select id="getUsers" resultType="com.llh.domain.User">
+            select uid,login_name from c_user
+      </select>
+
+      <select id="login" resultType="com.llh.domain.User">
+            select * from c_user where login_name=#{name} and login_pwd=#{pwd}
+      </select>
+
+      <select id="getLoanById" resultType="com.llh.domain.Loan">
+            select * from c_loan where lid=#{lid}
+      </select>
+</mapper>
