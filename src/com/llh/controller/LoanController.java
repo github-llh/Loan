@@ -58,14 +58,7 @@ public class LoanController extends HttpServlet {
                   if("addBatch".equals(method)){
                         addBatch(req,resp);
                   }
-                  if("test".equals(method)){
-                        test(req,resp);
-                  }
             }
-      }
-
-      private void test(HttpServletRequest req, HttpServletResponse resp) {
-
       }
 
       private void addBatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
