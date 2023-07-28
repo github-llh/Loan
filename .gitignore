@@ -1,29 +1,40 @@
-### IntelliJ IDEA ###
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+### CommitTemplate template
+# java
+*.class
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
+# vue
+/node_modules/
+
+# Intellij idea
+.idea/
+/idea/
+*.ipr
+*.iml
+*.iws
+
+# maven ignore
+target/
+build/
+
+# package file
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# eclipse ignore
+.settings/
 .project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+.classpatch
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+# temp file
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
 
-### VS Code ###
-.vscode/
-
-### Mac OS ###
+# system ignore
 .DS_Store
+Thumbs.db
